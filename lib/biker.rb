@@ -11,19 +11,24 @@ class Biker
   end
 
   def learn_terrain!(terrain_type)
-    
     @acceptable_terrain.push(terrain_type)
   end
 
-  def log_ride(ride_type, time )
-    if @rides[ride_type]
-      @rides[ride_type].push(time)
-    else
-      @rides[ride_type] = [time]
+  def log_ride(ride_type, time)
+    if @acceptable_terrain.include?(ride_type.terrain) && @distance >= ride_type.distance
+      if @rides[ride_type]
+        @rides[ride_type].push(time)
+      else
+        @rides[ride_type] = [time]
+      end
     end
   end
 
   def personal_record(ride_type)
-    @rides[ride_type].min
+    if @rides[ride_type]
+      @rides[ride_type].min
+    else
+      false
+    end
   end
 end
